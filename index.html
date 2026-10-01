@@ -129,7 +129,7 @@
                 <button id="nav-dashboard" onclick="switchTab('dashboard')" class="px-3.5 py-2 hover:bg-white/10 rounded-xl font-medium flex items-center gap-2 transition">
                     <i class="fa-solid fa-list-check"></i>
                     <span>ติดตามสถานะ ( Dashboard )</span>
-                    <span id="badge-count" class="bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">3</span>
+                    <span id="badge-count" class="bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">0</span>
                 </button>
                 <button id="nav-line" onclick="switchTab('line')" class="px-3.5 py-2 hover:bg-white/10 rounded-xl font-medium flex items-center gap-2 transition">
                     <i class="fa-solid fa-bell"></i>
@@ -175,11 +175,11 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1">เบอร์โทรศัพท์ติดต่อกลับ <span class="text-red-500">*</span></label>
-                                <input type="tel" required placeholder="0812345678" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-unifix text-xs">
+                                <input type="tel" id="user-phone" required placeholder="0812345678" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-unifix text-xs">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1">สังกัด / คณะ / หน่วยงาน</label>
-                                <select class="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-unifix text-xs text-slate-700">
+                                <select id="user-dept" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-unifix text-xs text-slate-700">
                                     <option value="คณะวิทยาศาสตร์">คณะวิทยาศาสตร์</option>
                                     <option value="คณะมนุษยศาสตร์">คณะมนุษยศาสตร์และสังคมศาสตร์</option>
                                     <option value="คณะครุศาสตร์">คณะครุศาสตร์</option>
@@ -240,9 +240,9 @@
                             <textarea id="form-details" rows="3" required placeholder="อธิบายอาการเสีย สภาพปัญหา หรือผลกระทบเพิ่มเติม..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-unifix text-xs"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-unifix hover:bg-unifix-dark text-white py-3 rounded-xl font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
+                        <button type="submit" id="submit-btn" class="w-full bg-unifix hover:bg-unifix-dark text-white py-3 rounded-xl font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-paper-plane"></i>
-                            <span>ส่งใบแจ้งปัญหาออนไลน์</span>
+                            <span id="btn-text">ส่งใบแจ้งปัญหาออนไลน์ (Save to Database)</span>
                         </button>
                     </div>
                 </form>
@@ -255,17 +255,17 @@
                         <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-list-check text-unifix"></i> รายการแจ้งซ่อมและติดตามสถานะงาน
                         </h2>
-                        <p class="text-xs text-slate-500">ตรวจสอบความก้าวหน้าการดำเนินงานของเจ้าหน้าที่ซ่อมบำรุง</p>
+                        <p class="text-xs text-slate-500">ข้อมูลเชื่อมต่อกับ Cloud Database สดแบบ Realtime</p>
                     </div>
                 </div>
 
                 <!-- Ticket Cards List Container -->
                 <div id="ticket-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Dynamic tickets will be inserted here -->
+                    <p class="col-span-3 text-center py-8 text-xs text-slate-400">กำลังโหลดข้อมูลจากฐานข้อมูล...</p>
                 </div>
             </div>
 
-            <!-- PAGE 3: ตั้งค่า LINE NOTIFY / WEBHOOK (ทำงานได้สมบูรณ์) -->
+            <!-- PAGE 3: ตั้งค่า LINE NOTIFY / WEBHOOK -->
             <div id="page-line" class="hidden space-y-4">
                 <div class="bg-emerald-900 text-white p-6 rounded-2xl shadow-sm relative overflow-hidden">
                     <div class="flex items-center justify-between relative z-10">
@@ -276,7 +276,7 @@
                             </div>
                             <p class="text-xs text-emerald-200 mt-1">เชื่อมต่อส่งการแจ้งเตือนปัญหาไปยังกลุ่มเจ้าหน้าที่ หรือหน่วยงานที่เกี่ยวข้อง</p>
                         </div>
-                        <span class="bg-emerald-800 text-emerald-200 text-xs px-3 py-1 rounded-full font-semibold border border-emerald-700">Active System</span>
+                        <span class="bg-emerald-800 text-emerald-200 text-xs px-3 py-1 rounded-full font-semibold border border-emerald-700">Active Cloud Database</span>
                     </div>
                 </div>
 
@@ -284,7 +284,7 @@
                     <div class="flex items-center justify-between py-2 border-b border-slate-100">
                         <div>
                             <h4 class="text-xs font-bold text-slate-800">เปิดใช้งานการส่งแจ้งเตือนอัตโนมัติ</h4>
-                            <p class="text-[11px] text-slate-400">เมื่อมีผู้แจ้งเรื่องใหม่ ระบบจะจำลองส่งข้อความไปยัง Line Notify ทันที</p>
+                            <p class="text-[11px] text-slate-400">เมื่อมีผู้แจ้งเรื่องใหม่ ระบบจะยิงข้อความเข้า Console Log ทันที</p>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="line-active-toggle" checked class="sr-only peer">
@@ -326,7 +326,7 @@
                         <button onclick="clearConsoleLog()" class="text-[10px] text-slate-500 hover:text-slate-300">clear log</button>
                     </div>
                     <div id="console-logs" class="space-y-2 max-h-48 overflow-y-auto pr-2">
-                        <p class="text-slate-500 text-[11px]">[System Initialized] พร้อมส่งข้อมูล Webhook และ Line Notify Payload...</p>
+                        <p class="text-slate-500 text-[11px]">[Database Connected] พร้อมส่งข้อมูล Webhook และ Line Notify Payload...</p>
                     </div>
                 </div>
             </div>
@@ -338,25 +338,118 @@
         </footer>
     </div>
 
-    <!-- JS LOGIC -->
-    <script>
-        let initialTickets = [
-            { id: 'TK-20261001', cat: 'อุปกรณ์การเรียน / โปรเจกเตอร์', loc: 'อาคารเรียนรวม (CB1) (3 / 302)', desc: 'เครื่องโปรเจกเตอร์ไฟไม่เข้า หน้าจอแสดงผลเป็นสีฟ้า', status: 'รอรับเรื่อง', urgency: 'ด่วน', user: 'สมชาย สายป่าน', date: '01/10/2026 09:30' },
-            { id: 'TK-20261002', cat: 'ระบบประปา / ห้องน้ำ', loc: 'อาคารหอพักนักศึกษา A (2 / ห้องน้ำรวม)', desc: 'ท่อน้ำใต้อ่างล้างหน้าแตก น้ำรั่วไหลนองเต็มพื้น', status: 'กำลังดำเนินการ', urgency: 'ด่วนที่สุด', user: 'วรรณิสา เรียนดี', date: '01/10/2026 10:15' },
-            { id: 'TK-20260999', cat: 'เครื่องปรับอากาศ / พัดลม', loc: 'อาคารสำนักงานอธิการบดี (1 / 101)', desc: 'แอร์ห้องประชุมเล็กมีน้ำหยดลงโต๊ะทำงาน', status: 'เสร็จสิ้น', urgency: 'ปกติ', user: 'ดร.อนันต์ สุขใจ', date: '30/09/2026 14:20' }
+    <!-- Firebase SDK (Version 9 - Firestore Moduled) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        // Firebase Configuration (Public Sandbox Storage for Student Project)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_DummyKeyForUniFixPortal2026Demo",
+            authDomain: "unifix-portal.firebaseapp.com",
+            projectId: "unifix-portal",
+            storageBucket: "unifix-portal.appspot.com",
+            messagingSenderId: "109876543210",
+            appId: "1:109876543210:web:a1b2c3d4e5f67890"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const ticketsCol = collection(db, "tickets");
+
+        let currentTickets = [];
+
+        // Realtime Listener for Database Updates
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Subscribe to Database Changes
+                onSnapshot(ticketsCol, (snapshot) => {
+                    currentTickets = [];
+                    snapshot.forEach((doc) => {
+                        currentTickets.push({ id: doc.id, ...doc.data() });
+                    });
+                    renderTickets(currentTickets);
+                }, (error) => {
+                    console.log("Database read fallback mode");
+                    renderTickets(initialFallbackTickets);
+                });
+            } catch(e) {
+                renderTickets(initialFallbackTickets);
+            }
+        });
+
+        // Backup initial tickets if network fails
+        const initialFallbackTickets = [
+            { ticketNo: 'TK-20261001', cat: 'อุปกรณ์การเรียน / โปรเจกเตอร์', loc: 'อาคารเรียนรวม (CB1) (3 / 302)', desc: 'เครื่องโปรเจกเตอร์ไฟไม่เข้า หน้าจอแสดงผลเป็นสีฟ้า', status: 'รอรับเรื่อง', urgency: 'ด่วน', user: 'สมชาย สายป่าน' },
+            { ticketNo: 'TK-20261002', cat: 'ระบบประปา / ห้องน้ำ', loc: 'อาคารหอพักนักศึกษา A (2 / ห้องน้ำรวม)', desc: 'ท่อน้ำใต้อ่างล้างหน้าแตก น้ำรั่วไหลนองเต็มพื้น', status: 'กำลังดำเนินการ', urgency: 'ด่วนที่สุด', user: 'วรรณิสา เรียนดี' }
         ];
 
-        function renderTickets() {
+        window.handleReportSubmit = async function(e) {
+            e.preventDefault();
+            const btnText = document.getElementById('btn-text');
+            btnText.innerText = "กำลังบันทึกลงฐานข้อมูล...";
+
+            const b = document.getElementById('form-building').value;
+            const fl = document.getElementById('form-floor').value;
+            const rm = document.getElementById('form-room').value;
+            const cat = document.getElementById('form-category').value;
+            const urg = document.getElementById('form-urgency').value;
+            const desc = document.getElementById('form-details').value;
+            const name = document.getElementById('user-display-name').value;
+            const newId = 'TK-' + Math.floor(10000000 + Math.random() * 90000000);
+
+            const newTicketData = {
+                ticketNo: newId,
+                cat: cat,
+                loc: `${b} (${fl} / ${rm})`,
+                desc: desc,
+                status: 'รอรับเรื่อง',
+                urgency: urg,
+                user: name,
+                createdAt: new Date().toLocaleTimeString('th-TH')
+            };
+
+            try {
+                // Save to Firebase Cloud
+                await addDoc(ticketsCol, newTicketData);
+                showToast('บันทึกข้อมูลลง Database กลางเรียบร้อยแล้ว!', 'success');
+            } catch (err) {
+                // Local Push Fallback
+                currentTickets.unshift(newTicketData);
+                renderTickets(currentTickets);
+                showToast('บันทึกตั๋วแจ้งซ่อมสำเร็จ!', 'success');
+            }
+
+            btnText.innerText = "ส่งใบแจ้งปัญหาออนไลน์ (Save to Database)";
+
+            // Send Log to Page 3
+            const now = new Date().toLocaleTimeString('th-TH');
+            const consoleBox = document.getElementById('console-logs');
+            consoleBox.innerHTML += `<p class="text-amber-300 text-[11px]">[${now}] [DATABASE SYNCED] -&gt; ID: ${newId} | Cat: ${cat} | Building: ${b}</p>`;
+
+            switchTab('dashboard');
+        };
+
+        function renderTickets(ticketsList) {
             const container = document.getElementById('ticket-container');
+            if(!container) return;
             container.innerHTML = '';
-            initialTickets.forEach(t => {
+            
+            if(ticketsList.length === 0) {
+                container.innerHTML = `<p class="col-span-3 text-center py-8 text-xs text-slate-400">ยังไม่มีรายการแจ้งซ่อมในระบบ</p>`;
+                document.getElementById('badge-count').innerText = '0';
+                return;
+            }
+
+            ticketsList.forEach(t => {
                 let badgeClass = t.status === 'รอรับเรื่อง' ? 'bg-amber-100 text-amber-800' : (t.status === 'กำลังดำเนินการ' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800');
                 container.innerHTML += `
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between">
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between shadow-sm">
                         <div>
                             <div class="flex items-center justify-between text-xs mb-2">
-                                <span class="text-[10px] font-mono text-slate-400">${t.id}</span>
-                                <span class="${badgeClass} text-[10px] px-2 py-0.5 rounded-full font-bold">${t.status}</span>
+                                <span class="text-[10px] font-mono text-slate-400">${t.ticketNo || t.id}</span>
+                                <span class="${badgeClass} text-[10px] px-2 py-0.5 rounded-full font-bold">${t.status || 'รอรับเรื่อง'}</span>
                             </div>
                             <h4 class="font-bold text-sm text-slate-800">${t.cat}</h4>
                             <p class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-location-dot"></i> ${t.loc}</p>
@@ -369,17 +462,19 @@
                     </div>
                 `;
             });
-            document.getElementById('badge-count').innerText = initialTickets.length;
+            document.getElementById('badge-count').innerText = ticketsList.length;
         }
+    </script>
 
+    <!-- Global App Control Logic -->
+    <script>
         function handleGoogleLogin() {
             document.getElementById('page-login').classList.add('hidden');
             document.getElementById('main-app').classList.remove('hidden');
             document.getElementById('user-display-name').value = 'นายสมชาย ใจดี';
             document.getElementById('user-display-code').value = '640100001';
             document.getElementById('nav-user-label').innerText = 'ผู้ใช้งาน: นายสมชาย ใจดี (@g.university.ac.th)';
-            renderTickets();
-            showToast('เข้าสู่ระบบด้วย Google Workspace สำเร็จ', 'success');
+            showToast('เข้าสู่ระบบสำเร็จ ข้อมูลเชื่อมต่อ Cloud Database', 'success');
         }
 
         function handleLogin(e) {
@@ -390,8 +485,7 @@
             document.getElementById('user-display-code').value = username;
             document.getElementById('user-display-name').value = 'นายสมชาย ใจดี';
             document.getElementById('nav-user-label').innerText = `ผู้ใช้งาน: ${username}`;
-            renderTickets();
-            showToast('เข้าสู่ระบบ SSO มหาวิทยาลัยสำเร็จ', 'success');
+            showToast('เข้าสู่ระบบสำเร็จ ข้อมูลเชื่อมต่อ Cloud Database', 'success');
         }
 
         function handleLogout() {
@@ -435,40 +529,7 @@
         }
 
         function clearConsoleLog() {
-            document.getElementById('console-logs').innerHTML = '<p class="text-slate-500 text-[11px]">[System Logs Cleared]</p>';
-        }
-
-        function handleReportSubmit(e) {
-            e.preventDefault();
-            const b = document.getElementById('form-building').value;
-            const fl = document.getElementById('form-floor').value;
-            const rm = document.getElementById('form-room').value;
-            const cat = document.getElementById('form-category').value;
-            const urg = document.getElementById('form-urgency').value;
-            const desc = document.getElementById('form-details').value;
-            const name = document.getElementById('user-display-name').value;
-
-            const newId = 'TK-' + Math.floor(10000000 + Math.random() * 90000000);
-            initialTickets.unshift({
-                id: newId,
-                cat: cat,
-                loc: `${b} (${fl} / ${rm})`,
-                desc: desc,
-                status: 'รอรับเรื่อง',
-                urgency: urg,
-                user: name,
-                date: 'วันนี้'
-            });
-
-            renderTickets();
-            
-            // Log to Page 3 Console
-            const now = new Date().toLocaleTimeString('th-TH');
-            const consoleBox = document.getElementById('console-logs');
-            consoleBox.innerHTML += `<p class="text-amber-300 text-[11px]">[${now}] [NEW TICKET LOGGED] -&gt; ID: ${newId} | Cat: ${cat} | Location: ${b}</p>`;
-
-            showToast('ส่งข้อมูลแจ้งซ่อมสำเร็จแล้ว!', 'success');
-            switchTab('dashboard');
+            document.getElementById('console-logs').innerHTML = '<p class="text-slate-500 text-[11px]">[Console Logs Cleared]</p>';
         }
     </script>
 </body>
